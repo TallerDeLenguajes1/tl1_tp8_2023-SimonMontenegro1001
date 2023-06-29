@@ -1,5 +1,6 @@
 ﻿using System;
 using EspacioTarea;
+using System.IO;
 
 namespace Punto1
 {
@@ -49,7 +50,25 @@ namespace Punto1
 
                 Console.WriteLine();
             }
+            // crear, escribir y guardar archivo de texto 
+            GuardarTiempoTrabajado(tareasRealizadas);
         }
+        static void GuardarTiempoTrabajado(List<Tarea> tareasRealizadas)
+        {
+            int sumatoriaDuracionTRealizadas = tareasRealizadas.Sum(t => t.Duracion);
+
+            if (File.Exists("TiempoTrabajado.txt"))
+            {
+                File.Delete("TiempoTrabajado.txt");
+            }
+
+            using (StreamWriter sw = new StreamWriter("TiempoTrabajado.txt"))
+            {
+                sw.WriteLine("Tiempo trabajado por el empleado: " + sumatoriaDuracionTRealizadas);
+                Console.WriteLine("Se guardó el archivo con el tiempo trabajado correctamente.");
+            }
+        }
+
         static void BuscarTareasPorDescripcion(List<Tarea> tareasPendientes)
         {
             Console.WriteLine("Ingrese la palabra clave de la tarea a buscar:");
